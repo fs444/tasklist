@@ -1,0 +1,121 @@
+<?php require 'application/layouts/header.phtml'; ?>
+<div class="container">
+    <h2>Cписок задач</h2>
+
+    <?php
+    if ($str_pag > 1) {
+        ?>
+        <p>Страницы
+        <?php
+        for ($i = 1; $i <= $str_pag; $i++) {
+          $link_url = $task->changeUrlParam($_SERVER['REQUEST_URI'], "page", $i);
+
+          if ($_GET['page'] != '') {
+              if ($_GET['page'] == $i) {
+                  $link_style = "font-weight: bold;";
+              } else {
+                  $link_style = "";
+              }
+          } else {
+              if ($i == 1) {
+                  $link_style = "font-weight: bold;";
+              } else {
+                  $link_style = "";
+              }
+          }
+          ?>
+        <a href="<?php echo $link_url; ?>" style="<?php echo $link_style; ?>"><?php echo $i; ?></a>
+          <?
+        }
+        ?>
+        </p>
+        <?php
+    }
+    ?>
+    <table class="table table-bordered">
+        <tr>
+          <td style="width: 16%;">
+              <a href="<?php
+          //сортировка
+          if ($_GET['sort_order'] == '' || $_GET['sort_order'] == 'asc') {
+            $sort_order = 'desc';
+          } else {
+            $sort_order = 'asc';
+          }
+
+          $sort_link_url = $_SERVER['REQUEST_URI'];
+
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort", "user_name");
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort_order", $sort_order);
+
+            echo $sort_link_url;
+
+            ?>">имя пользователя</a></td>
+          <td style="width: 19%;"><a href="<?php
+          //сортировка
+          if ($_GET['sort_order'] == '' || $_GET['sort_order'] == 'asc') {
+            $sort_order = 'desc';
+          } else {
+            $sort_order = 'asc';
+          }
+
+          $sort_link_url = $_SERVER['REQUEST_URI'];
+
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort", "user_email");
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort_order", $sort_order);
+
+          echo $sort_link_url;
+            ?>">email</a></td>
+          <td style="width: <?php if ($_SESSION['user_name'] == 'admin') { echo '49%'; } else { echo '53%'; } ?>">текст задачи</td>
+          <td style="width: 12%;"><a href="<?php
+          //сортировка
+          if ($_GET['sort_order'] == '' || $_GET['sort_order'] == 'asc') {
+            $sort_order = 'desc';
+          } else {
+            $sort_order = 'asc';
+          }
+
+          $sort_link_url = $_SERVER['REQUEST_URI'];
+
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort", "status");
+          $sort_link_url = $task->changeUrlParam($sort_link_url, "sort_order", $sort_order);
+
+          echo $sort_link_url;
+          ?>">статус</a></td>
+        <?php if ($_SESSION['user_name'] == 'admin'): ?>
+            <td style="width: 4%;"></td>
+        <?php endif; ?>
+        </tr>
+        <?php while($row = mysqli_fetch_array($result)): ?>
+        <?php
+            if ($row['admin_edited'] == 1) {
+                $admin_edited = 'отредакт. адм.';
+            } else {
+                $admin_edited = '';
+            }
+        ?>
+        <tr>
+            <td><?php echo $row['user_name']; ?></td>
+            <td><?php echo $row['user_email']; ?></td>
+            <td>
+                <div><?php echo $row['task_text']; ?></div>
+                <?php if ($admin_edited != ''): ?>
+                    <span class="badge badge-primary"><?php echo $admin_edited; ?></span>
+                <?php endif; ?>
+            </td>
+            <td><?php
+                if ($row['status'] == 'done') {
+                    echo 'выполнено';
+                } else {
+                    echo 'ожидает вып.';
+                }
+            ?></td>
+            <?php if ($_SESSION['user_name'] == 'admin'): ?>
+                <td><a href="/index.php?controller=admin&action=edit&task_id=<?php echo $row['id']; ?>" style="text-decoration: none;" >&#9998;</a></td>
+            <?php endif; ?>
+        </tr>
+        <?php endwhile; ?>
+    </table>
+
+    <?php require 'application/layouts/footer.phtml'; ?>
+</div>

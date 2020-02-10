@@ -1,0 +1,14 @@
+<?php require 'application/layouts/header.phtml'; ?>
+
+<div class="container">
+    <?php if ($login_errors == ''): ?>
+        <h2>Вход выполнен</h2>
+        <p><a href="index.php?controller=index&action=index">перейти на главную страницу</a></p>
+    <?php else: ?>
+        <h2>Ошибка входа</h2>
+        <div class="alert alert-danger" role="alert"><?php echo $login_errors; ?></div>
+        <p><a href="index.php?controller=admin&action=login">попробовать снова</a></p>
+    <?php endif; ?>
+</div>
+
+<?php require 'application/layouts/footer.phtml'; ?>

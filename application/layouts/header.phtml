@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Приложение-задачник</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </head>
+    <body>
+
+    <div class="container">
+      <h1>Приложение-задачник</h1>
+      <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" href="/index.php?controller=index&action=index">главная</a></li>
+              <li class="nav-item" style="">
+                  <div style="display: block; width: 139px; height: 34px; margin-left: 27px; margin-top: 8px;">
+                      <?php if ($_SESSION['user_name'] != ''): ?>
+                          <div style="float: left;"><?php echo $_SESSION['user_name']; ?></div>
+                          <div style="float: left;"> <a class="nav-link" href="/index.php?controller=authorization&action=logout" style="position: relative; margin-top: -8px;">(выйти)</a></div>
+                      <?php else: ?>
+                        <a class="nav-link" href="/index.php?controller=admin&action=login" style="position: relative; margin-top: -8px;">авторизация</a>
+                      <?php endif; ?>
+                  </div>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="/index.php?controller=task&action=create">создать задачу</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>

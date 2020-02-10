@@ -1,0 +1,28 @@
+<?php require 'application/layouts/header.phtml'; ?>
+
+<div class="container">
+    <h2>Создание новой задачи</h2>
+
+    <?php if ($this->error_message != ""): ?>
+        <div class="alert alert-danger" role="alert"><?php echo $this->error_message; ?></div>
+    <?php endif; ?>
+
+    <form action="/index.php?controller=task&action=add" method="post">
+        <div class="form-group">
+          <label for="exampleInputName">Имя</label>
+          <input type="text" name="user_name" class="form-control col-md-4" id="exampleInputName" value="<?php echo $_POST['user_name']; ?>">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="email" name="user_email" class="form-control col-md-4" id="exampleInputEmail1" value="<?php echo $_POST['user_email']; ?>">
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Текст задачи</label>
+          <textarea class="form-control" name="text_task" id="exampleFormControlTextarea1" rows="3"><?php echo $_POST['text_task']; ?></textarea>
+        </div>
+
+      <button type="submit" class="btn btn-primary">отправить</button>
+    </form>
+</div>
+
+<?php require 'application/layouts/footer.phtml'; ?>
