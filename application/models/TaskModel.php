@@ -6,11 +6,7 @@ class TaskModel
 {
     //добавление задания
     public function addTask($user_name, $user_email, $task_text) {
-        $conn = new \mysqli("localhost", "root", "", "mvc_site_db");
-
-        if ($conn->connect_error) {
-            die("ошибка подключения к бд" . $conn->connect_error);
-        }
+        global $conn;
 
         $result = $conn->query("insert into tasks values (null, '$user_name', '$user_email', '$task_text', null, 0)");
     }
